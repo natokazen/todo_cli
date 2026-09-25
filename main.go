@@ -29,13 +29,8 @@ func main() {
 		if choice == "q" || choice == "quit" {
 			break
 		} else if choice == "list" {
-			for _, item := range todo {
-				if item.IsCompleted {
-					fmt.Println("[X] Id: ", item.ID, "Item: ", item.Todo)
-				} else {
-					fmt.Println("[ ] Id: ", item.ID, "Item: ", item.Todo)
-				}
-			}
+			// Calling list function
+			listTasks(todo)
 		} else if choice == "complete" {
 
 			if len(todo) == 0 {
@@ -79,4 +74,14 @@ func main() {
 	}
 
 	fmt.Println(todo)
+}
+
+func listTasks(todo []TodoItem) {
+	for _, item := range todo {
+		if item.IsCompleted {
+			fmt.Println("[X] Id: ", item.ID, "Item: ", item.Todo)
+		} else {
+			fmt.Println("[ ] Id: ", item.ID, "Item: ", item.Todo)
+		}
+	}
 }
