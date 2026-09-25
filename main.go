@@ -20,7 +20,7 @@ func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
-		fmt.Println("Enter a command: 'add' , 'list', 'complete' or 'q' / 'quit' :")
+		fmt.Print("\n Enter a command: 'add' , 'list', 'complete' or 'q' / 'quit' : ")
 		scanner.Scan()
 		choice = scanner.Text()
 		if err := scanner.Err(); err != nil {
@@ -52,14 +52,15 @@ func main() {
 func listTasks(todo []TodoItem) {
 	for _, item := range todo {
 		if item.IsCompleted {
-			fmt.Println("[X] Id: ", item.ID, "Item: ", item.Todo)
+			fmt.Println("\n  [X] Id: ", item.ID, "Item: ", item.Todo)
 		} else {
-			fmt.Println("[ ] Id: ", item.ID, "Item: ", item.Todo)
+			fmt.Println("\n  [ ] Id: ", item.ID, "Item: ", item.Todo)
 		}
 	}
 }
 
 func addTask(scanner *bufio.Scanner, todo []TodoItem) []TodoItem {
+	fmt.Print("\n Add task : ")
 	scanner.Scan()
 	input := scanner.Text()
 	if err := scanner.Err(); err != nil {
@@ -83,7 +84,7 @@ func markTaskComplete(todo []TodoItem) []TodoItem {
 
 	var targetID int
 
-	fmt.Println("Enter the id: ")
+	fmt.Print("\n Enter the id: ")
 	_, err := fmt.Scanln(&targetID)
 	if err != nil {
 		fmt.Print("Please enter a valid id")
