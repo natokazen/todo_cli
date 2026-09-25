@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 type TodoItem struct {
@@ -26,6 +27,8 @@ func main() {
 			fmt.Println("Err reading input:", err)
 		}
 
+		choice = strings.TrimSpace(choice)
+
 		if choice == "q" || choice == "quit" {
 			break
 		} else if choice == "list" {
@@ -42,8 +45,6 @@ func main() {
 		}
 
 	}
-
-	fmt.Println(todo)
 }
 
 // / ================ HELPER FUNCTIONS ======================== ///
