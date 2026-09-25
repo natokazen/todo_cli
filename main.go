@@ -32,27 +32,10 @@ func main() {
 			// Calling list function
 			listTasks(todo)
 		} else if choice == "complete" {
-
-			if len(todo) == 0 {
-				fmt.Println("To items to complete yet!")
-				continue
-			}
-
-			var targetID int
-
-			fmt.Println("Enter the id: ")
-			_, err := fmt.Scanln(&targetID)
-			if err != nil {
-				fmt.Print("Please enter a valid id")
-			}
-
-			for index, item := range todo {
-				if item.ID == targetID {
-					todo[index].IsCompleted = true
-				}
-			}
-
+			// Calling mark function
+			todo = markTaskComplete(todo)
 		} else if choice == "add" {
+			// Calling add function
 			todo = addTask(scanner, todo)
 		} else {
 			fmt.Println("Not a command")
@@ -62,6 +45,8 @@ func main() {
 
 	fmt.Println(todo)
 }
+
+// / ================ HELPER FUNCTIONS ======================== ///
 
 func listTasks(todo []TodoItem) {
 	for _, item := range todo {
@@ -86,5 +71,28 @@ func addTask(scanner *bufio.Scanner, todo []TodoItem) []TodoItem {
 		IsCompleted: false,
 	}
 	todo = append(todo, newTodo)
+	return todo
+}
+
+func markTaskComplete(todo []TodoItem) []TodoItem {
+	if len(todo) == 0 {
+		fmt.Println("To items to complete yet!")
+		return todo
+	}
+
+	var targetID int
+
+	fmt.Println("Enter the id: ")
+	_, err := fmt.Scanln(&targetID)
+	if err != nil {
+		fmt.Print("Please enter a valid id")
+	}
+
+	for index, item := range todo {
+		if item.ID == targetID {
+			todo[index].IsCompleted = true
+		}
+	}
+
 	return todo
 }
