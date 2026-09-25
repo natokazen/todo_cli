@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 )
 
 type TodoItem struct {
@@ -14,12 +16,14 @@ func main() {
 	todo := []TodoItem{}
 
 	var choice, input string
+	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
 		fmt.Println("Enter a command: 'add' , 'list', 'complete' or 'q' / 'quit' :")
-		_, err := fmt.Scanln(&choice)
-		if err != nil {
-			fmt.Print("Please enter a valid choice")
+		scanner.Scan()
+		choice = scanner.Text()
+		if err := scanner.Err(); err != nil {
+			fmt.Println("Err reading input:", err)
 		}
 
 		if choice == "q" || choice == "quit" {
@@ -34,6 +38,11 @@ func main() {
 			}
 		} else if choice == "complete" {
 
+			if len(todo) == 0 {
+				fmt.Println("To items to complete yet!")
+				continue
+			}
+
 			var targetID int
 
 			fmt.Println("Enter the id: ")
@@ -43,10 +52,6 @@ func main() {
 			}
 
 			for index, item := range todo {
-				if len(todo) == 0 {
-					fmt.Println("To items to complete yet!")
-				}
-
 				if item.ID == targetID {
 					todo[index].IsCompleted = true
 				}
@@ -54,9 +59,10 @@ func main() {
 
 		} else if choice == "add" {
 
-			_, err := fmt.Scanln(&input)
-			if err != nil {
-				fmt.Print("")
+			scanner.Scan()
+			input = scanner.Text()
+			if err := scanner.Err(); err != nil {
+				fmt.Println("Err reading input:", err)
 			}
 
 			newTodo := TodoItem{
