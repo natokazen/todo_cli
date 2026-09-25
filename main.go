@@ -15,7 +15,7 @@ type TodoItem struct {
 func main() {
 	todo := []TodoItem{}
 
-	var choice, input string
+	var choice string
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -53,20 +53,7 @@ func main() {
 			}
 
 		} else if choice == "add" {
-
-			scanner.Scan()
-			input = scanner.Text()
-			if err := scanner.Err(); err != nil {
-				fmt.Println("Err reading input:", err)
-			}
-
-			newTodo := TodoItem{
-				ID:          len(todo) + 1,
-				Todo:        input,
-				IsCompleted: false,
-			}
-			todo = append(todo, newTodo)
-
+			todo = addTask(scanner, todo)
 		} else {
 			fmt.Println("Not a command")
 		}
@@ -84,4 +71,20 @@ func listTasks(todo []TodoItem) {
 			fmt.Println("[ ] Id: ", item.ID, "Item: ", item.Todo)
 		}
 	}
+}
+
+func addTask(scanner *bufio.Scanner, todo []TodoItem) []TodoItem {
+	scanner.Scan()
+	input := scanner.Text()
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Err reading input:", err)
+	}
+
+	newTodo := TodoItem{
+		ID:          len(todo) + 1,
+		Todo:        input,
+		IsCompleted: false,
+	}
+	todo = append(todo, newTodo)
+	return todo
 }
