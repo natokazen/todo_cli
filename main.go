@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
@@ -14,7 +15,16 @@ type TodoItem struct {
 }
 
 func main() {
+	jsonData, err := os.ReadFile("data.json")
+	if err != nil {
+		fmt.Println("Failed to read file")
+	}
 	todo := []TodoItem{}
+
+	err = json.Unmarshal(jsonData, &todo)
+	if err != nil {
+		fmt.Println("Failed to convert json to slice")
+	}
 
 	var choice string
 	scanner := bufio.NewScanner(os.Stdin)
@@ -36,6 +46,7 @@ func main() {
 		choice = strings.TrimSpace(choice)
 
 		if choice == "q" || choice == "quit" {
+			saveData(todo)
 			break
 		} else if choice == "list" {
 			// Calling list function
@@ -103,4 +114,16 @@ func markTaskComplete(todo []TodoItem) []TodoItem {
 	}
 
 	return todo
+}
+
+func saveData(todo []TodoItem) {
+	jsonData, err := json.Marshal(todo)
+	if err != nil {
+		fmt.Println("Failed to save in database", err)
+	}
+
+	err = os.WriteFile("data.json", jsonData, 0644)
+	if err != nil {
+		fmt.Println("Failed to save in file", err)
+	}
 }
