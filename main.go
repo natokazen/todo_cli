@@ -19,6 +19,12 @@ func main() {
 	var choice string
 	scanner := bufio.NewScanner(os.Stdin)
 
+	fmt.Print(`
+		░▀█▀░█▀█░█▀▄░█▀█░░░█▀▀░█░░░▀█▀
+		░░█░░█░█░█░█░█░█░░░█░░░█░░░░█░
+		░░▀░░▀▀▀░▀▀░░▀▀▀░░░▀▀▀░▀▀▀░▀▀▀
+		`)
+
 	for {
 		fmt.Print("\n Enter a command: 'add' , 'list', 'complete' or 'q' / 'quit' : ")
 		scanner.Scan()
